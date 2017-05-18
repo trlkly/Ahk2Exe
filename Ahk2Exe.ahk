@@ -69,6 +69,8 @@ Gui, Add, Button, x519 y241 w53 h23 gDefaultIco, D&efault
 Gui, Add, Text, x18 y274, Base File (.bin)
 Gui, Add, DDL, x138 y270 w315 h23 R10 AltSubmit vBinFileId Choose%BinFileId%, %BinNames%
 Gui, Add, CheckBox, x138 y298 w315 h20 vUseMpress Checked%LastUseMPRESS%, Use MPRESS (if present) to compress resulting exe
+Gui, Add, Text, x461 y298 Parameters:
+Gui, Add, Edit, x519 y298 w53 h23 vMpressParams
 Gui, Add, Button, x258 y329 w75 h28 Default gConvert, > &Convert <
 Gui, Add, Statusbar,, Ready
 if !A_IsCompiled
@@ -324,6 +326,8 @@ Convert:
 Gui, +OwnDialogs
 Gui, Submit, NoHide
 BinFile := A_ScriptDir "\" BinFiles[BinFileId]
+if UseMpress && MpressParams
+	UseMpress := MpressParams
 ConvertCLI:
 AhkCompile(AhkFile, ExeFile, IcoFile, BinFile, UseMpress, ScriptFileCP)
 if !CLIMode
